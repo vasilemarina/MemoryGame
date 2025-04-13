@@ -1,0 +1,79 @@
+﻿<Window x:Class="Tema2_MemoryGame.View.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tema2_MemoryGame.ViewModel"
+        mc:Ignorable="d"
+        Title="Memory Game" Height="600" Width="1000"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <Window.Background>
+        <StaticResource ResourceKey="GameBackground"/>
+    </Window.Background>
+    <Window.DataContext>
+        <local:GameVM/>
+    </Window.DataContext>
+    <Grid>
+        <Menu Height="20" VerticalAlignment="Top">
+            <Menu.Background>
+                <StaticResource ResourceKey="WindowBackground"/>
+            </Menu.Background>
+            <MenuItem Header="File">
+                <MenuItem Header="Save Game" Command="{Binding SaveGameCommand}" CommandParameter="{Binding Content, ElementName=remainingTimeLabel}"/>
+                <MenuItem Header="Exit" Command="{Binding CloseWindowCommand}"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel>
+
+            <WrapPanel HorizontalAlignment="Right" Margin="10">
+                <Label Height="60" Width="250"  VerticalAlignment="Top" Content="Remaining Time" FontSize="25"/>
+                <Label Height="60" Width="100" VerticalAlignment="Top" Name="remainingTimeLabel" FontSize="25"/>
+            </WrapPanel>
+            <ItemsControl x:Name="grid" ItemsSource="{Binding Cards}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                    <Button IsEnabled="{Binding NotMatched}" 
+                                    Height="70" Width="70" Margin="4,4,4,4" FontSize="20" 
+                                        Command="{Binding DataContext.TurnOverCardCommand ,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" >
+                                    
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="UniformToFill" />
+                                    </Button.Background>
+                                        <Button.Style>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="Button">
+                                                            <Grid Background="{TemplateBinding Background}">
+                                                                <ContentPresenter />
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+        
+                                            </Style>
+                                        </Button.Style>
+
+                                    </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        </StackPanel>
+    </Grid>
+</Window>

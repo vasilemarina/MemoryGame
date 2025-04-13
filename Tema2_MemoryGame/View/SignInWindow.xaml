@@ -1,0 +1,90 @@
+﻿<Window x:Class="Tema2_MemoryGame.View.SignInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tema2_MemoryGame.ViewModel"
+        mc:Ignorable="d"
+        Title="Memory Game" Height="600" Width="1000"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <Window.Background>
+        <StaticResource ResourceKey="WindowBackground"/>
+    </Window.Background>
+    <Window.DataContext>
+        <local:SignInVM/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="450"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0"
+                   Text="Welcome back!" FontSize="30" HorizontalAlignment="Center" Foreground="{StaticResource TitleForeground}"/>
+        <StackPanel Name="currentUserPanel" Grid.Column="0" Grid.Row="1" Visibility="{Binding SelectedUserVisibility}">
+            <Border Width="150" Height="150"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="4">
+                <Image Width="150" Height="150" HorizontalAlignment="Center"
+                       Source="{Binding SelectedUser.ProfilePicturePath}"/>
+            </Border>
+
+            <TextBlock Text="{Binding SelectedUser.Username}" Foreground="{StaticResource TextForeground}"
+                       FontSize="20" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Name="newUserPanel" Grid.Column="0" Grid.Row="1" Visibility="{Binding CreateNewUserVisibility}">
+            <Border Width="150" Height="150"
+            BorderBrush="{StaticResource BorderBrush}" BorderThickness="4">
+                <Image Width="150" Height="150" HorizontalAlignment="Center"
+                       Source="{Binding CurrentProfileImagePath}"/>
+            </Border>
+
+            <TextBox Name="usernameTextBox" Foreground="{StaticResource TextForeground}" Text="{Binding NewUsername}"
+                     Width="200" FontSize="20" HorizontalAlignment="Center"/>
+
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Content="&lt;-" Command="{Binding PreviousImageCommand}"/>
+                <Button Content="->" Command="{Binding NextImageCommand}"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Content="Add User" Command="{Binding AddUserCommand}"/>
+                <Button Content="Cancel" Command="{Binding CancelCreateUserCommand}"/>
+            </WrapPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" Background="{StaticResource PanelBackground}" Margin="10" IsEnabled="{Binding SelectUserOn}">
+            <TextBlock Text="Users" Foreground="{StaticResource TitleForeground}"
+               FontSize="30" HorizontalAlignment="Center"/>
+            <ListBox Name="usersListBox" Background="Transparent" BorderBrush="Transparent"
+                     Height="370" Width="450" VerticalAlignment="Bottom" Margin="15"
+                     ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Username}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+
+        <WrapPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left">
+            <Button Content="New User" Command="{Binding CreateUserCommand}"/>
+            <Button Content="Delete User" Command="{Binding DeleteUserCommand}"/>
+        </WrapPanel>
+
+        <WrapPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
+            <Button Content="Cancel" Command="{Binding ExitGameCommand}"/>
+            <Button Content="Play" Command="{Binding StartGameCommand}"/>
+        </WrapPanel>
+
+    </Grid>
+</Window>

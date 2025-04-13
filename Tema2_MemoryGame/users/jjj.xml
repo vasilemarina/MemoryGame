@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<User xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Username>jjj</Username>
+  <ProfilePicturePath>D:/Facultate_An2_Sem2/MAP/Tema2_MemoryGame/Tema2_MemoryGame/user_images\profile_picture3.jpg</ProfilePicturePath>
+  <PlayedGames>3</PlayedGames>
+  <WonGames>1</WonGames>
+</User>

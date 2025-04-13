@@ -1,0 +1,73 @@
+﻿<Window x:Class="Tema2_MemoryGame.View.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Tema2_MemoryGame.ViewModel"
+        mc:Ignorable="d"
+        Title="Memory Game" Height="600" Width="1000"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </Window.Resources>
+    <Window.Background>
+        <StaticResource ResourceKey="MenuBackground"/>
+    </Window.Background>
+    <Window.DataContext>
+        <local:MenuVM/>
+    </Window.DataContext>
+    <Grid>
+        <Menu Height="20" VerticalAlignment="Top">
+            <Menu.Background>
+                <StaticResource ResourceKey="GameBackground"/>
+            </Menu.Background>
+            <MenuItem Header="File">
+                <MenuItem Header="Category">
+                    <MenuItem Header="Flowers" Command="{Binding SelectCategoryCommand}" CommandParameter="Flowers"/>
+                    <MenuItem Header="Animals" Command="{Binding SelectCategoryCommand}" CommandParameter="Animals"/>
+                    <MenuItem Header="Fruits" Command="{Binding SelectCategoryCommand}" CommandParameter="Fruits"/>
+                </MenuItem>
+                <MenuItem Header="New Game" Command="{Binding NewGameCommand}"/>
+                <MenuItem Header="Open Game" Command="{Binding OpenGameCommand}"/>
+                <MenuItem Header="Statistics" Command="{Binding ShowStatisticsCommand}"/>
+                <MenuItem Header="Exit" Command="{Binding CloseWindowCommand}"/>
+            </MenuItem>
+
+            <MenuItem Header="Options">
+                <MenuItem Header="Standard" Command="{Binding ChangeDimensionCommand}" CommandParameter="4x4"/>
+                <MenuItem Header="Custom">
+                    <MenuItem Header="2x2" Command="{Binding ChangeDimensionCommand}" CommandParameter="2x2"/>
+                    <MenuItem Header="2x4" Command="{Binding ChangeDimensionCommand}" CommandParameter="2x4"/>
+                    <MenuItem Header="6x2" Command="{Binding ChangeDimensionCommand}" CommandParameter="6x2"/>
+                    <MenuItem Header="6x4" Command="{Binding ChangeDimensionCommand}" CommandParameter="6x4"/>
+                    <MenuItem Header="6x6" Command="{Binding ChangeDimensionCommand}" CommandParameter="6x6"/>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Command="{Binding OpenAboutBoxCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <StackPanel VerticalAlignment="Center">
+            <Label HorizontalAlignment="Center" FontSize="50" Content="{Binding ScreenMessage}" VerticalAlignment="Top" Width="600" Height="100"/>
+            <WrapPanel>
+                <Label Height="50" Width="200" Content="Category:" FontSize="20"/>
+                <Label Height="50" Width="200" Content="{Binding Category}" FontSize="20"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Height="50" Width="200" Content="Dimensions:" FontSize="20"/>
+                <Label Height="50" Width="200" Content="{Binding BoardDimensions}" FontSize="20"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Height="50" Width="200" Content="Time:" FontSize="20"/>
+                <TextBox Height="30" Width="200" Text="{Binding Time}" FontSize="20" Name="setTimeTextBox">
+                    <TextBox.Background>
+                        <StaticResource ResourceKey="GameBackground"/>
+                    </TextBox.Background>
+                </TextBox>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>
